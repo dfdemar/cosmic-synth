@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- Add the missing background element -->
   <div class="bg"></div>
 
   <header class="topbar" role="banner">
@@ -22,6 +23,17 @@
         <path d="M50 15 L80 85 L20 85 Z" fill="url(#g)" opacity="0.4"/>
       </svg>
       <span>Alien Console</span>
+    </div>
+
+    <!-- GLOBAL MASTER VOLUME -->
+    <div class="master-volume">
+      <div class="master-knob" id="master-volume" data-value="0.6">
+        <div class="master-dial">
+          <div class="master-indicator"></div>
+        </div>
+        <div class="quantum-flux"></div>
+      </div>
+      <label>MASTER</label>
     </div>
 
     <div class="toolbar" role="navigation" aria-label="Theme and Actions">
@@ -162,7 +174,22 @@
       <header><h2 id="scope-title">Scope & Nebula</h2></header>
       <canvas id="scope" width="640" height="140" aria-label="oscilloscope"></canvas>
       <canvas id="nebula" width="640" height="120" aria-label="nebula"></canvas>
-      <footer class="hint">Audio-reactive particle nebula</footer>
+      <div class="scope-controls">
+        <div class="visual-mode-selector">
+          <button id="scope-mode-wave" class="active">Wave</button>
+          <button id="scope-mode-freq">Freq</button>
+          <button id="scope-mode-lissa">Lissa</button>
+          <button id="scope-mode-spiral">Spiral</button>
+        </div>
+        <label>Zoom <input id="scope-zoom" type="range" min="0.1" max="5" step="0.1" value="1"></label>
+        <label>Speed <input id="scope-speed" type="range" min="0.1" max="10" step="0.1" value="1"></label>
+        <label>Particles <input id="nebula-count" type="range" min="50" max="500" step="10" value="220"></label>
+        <label>Chaos <input id="nebula-chaos" type="range" min="0" max="2" step="0.1" value="0.5"></label>
+        <label><input id="scope-freeze" type="checkbox"> Freeze</label>
+        <label><input id="nebula-react" type="checkbox" checked> Audio React</label>
+        <button id="scope-pulse">Pulse</button>
+      </div>
+      <footer class="hint">Audio-reactive visuals • Multiple display modes</footer>
     </section>
 
     <!-- EFFECTS & MODS -->
@@ -207,6 +234,68 @@
       <header><h2 id="term-title">Status Terminal</h2></header>
       <div class="crt" role="log" aria-live="polite"></div>
       <footer class="hint">Autonomous chatter</footer>
+    </section>
+
+    <!-- NEW ALIEN PANELS -->
+
+    <!-- BIOMECHANICAL SEQUENCER -->
+    <section class="widget bio-sequencer" aria-labelledby="bio-title">
+      <header><h2 id="bio-title">Bio Sequencer</h2></header>
+      <div class="bio-container">
+        <svg class="bio-tentacles" viewBox="0 0 400 200">
+          <g class="tentacle-group"></g>
+        </svg>
+        <div class="neural-network"></div>
+      </div>
+      <div class="bio-controls">
+        <button id="bio-mutate">MUTATE</button>
+        <label>Evolution <input id="bio-evolution" type="range" min="0" max="100" value="30"></label>
+      </div>
+      <footer class="hint">Organic step evolution • Neural pathways adapt</footer>
+    </section>
+
+    <!-- CRYSTALLINE RESONATOR -->
+    <section class="widget crystal" aria-labelledby="crystal-title">
+      <header><h2 id="crystal-title">Crystal Resonator</h2></header>
+      <div class="crystal-container">
+        <div class="crystal-3d" id="crystal-3d">
+          <div class="crystal-face" data-filter="lowpass"></div>
+          <div class="crystal-face" data-filter="highpass"></div>
+          <div class="crystal-face" data-filter="bandpass"></div>
+          <div class="crystal-face" data-filter="notch"></div>
+        </div>
+        <div class="crystal-fractures"></div>
+      </div>
+      <footer class="hint">Touch crystal faces • Fracture for chaos</footer>
+    </section>
+
+    <!-- QUANTUM ENTANGLEMENT HUB -->
+    <section class="widget quantum" aria-labelledby="quantum-title">
+      <header><h2 id="quantum-title">Quantum Hub</h2></header>
+      <div class="quantum-field">
+        <div class="qubit" data-entangled="1" data-param="cutoff"></div>
+        <div class="qubit" data-entangled="1" data-param="delay"></div>
+        <div class="qubit" data-entangled="2" data-param="reverb"></div>
+        <div class="qubit" data-entangled="2" data-param="phase"></div>
+        <div class="entanglement-lines"></div>
+        <div class="probability-clouds"></div>
+      </div>
+      <footer class="hint">Spooky action at a distance • Uncertainty principle</footer>
+    </section>
+
+    <!-- ALIEN ATMOSPHERE GENERATOR -->
+    <section class="widget atmosphere" aria-labelledby="atmo-title">
+      <header><h2 id="atmo-title">Atmosphere</h2></header>
+      <div class="planet-surface">
+        <div class="weather-system"></div>
+        <div class="cosmic-radiation"></div>
+      </div>
+      <div class="atmo-controls">
+        <label>Solar Wind <input id="solar-wind" type="range" min="0" max="100" value="20"></label>
+        <label>Ion Storm <input id="ion-storm" type="range" min="0" max="100" value="0"></label>
+        <label>Gravity <input id="gravity" type="range" min="0" max="100" value="50"></label>
+      </div>
+      <footer class="hint">Alien world ambience • Weather affects all systems</footer>
     </section>
 
   </main>
