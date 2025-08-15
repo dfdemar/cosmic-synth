@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alien Console — Cosmic Fidget Panel</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg"></div>
+
+  <header class="topbar" role="banner">
+    <div class="brand">
+      <svg width="28" height="28" viewBox="0 0 100 100" aria-hidden="true">
+        <defs>
+          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="hsl(180 90% 60%)"/>
+            <stop offset="100%" stop-color="hsl(300 90% 60%)"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="50" r="45" fill="none" stroke="url(#g)" stroke-width="8"/>
+        <path d="M50 15 L80 85 L20 85 Z" fill="url(#g)" opacity="0.4"/>
+      </svg>
+      <span>Alien Console</span>
+    </div>
+
+    <div class="toolbar" role="navigation" aria-label="Theme and Actions">
+      <div class="themes">
+        <button class="chip" data-theme="neon" aria-pressed="true" title="Neon">Neon</button>
+        <button class="chip" data-theme="vapor" title="Vapor">Vapor</button>
+        <button class="chip" data-theme="solar" title="Solar">Solar</button>
+        <button class="chip" data-theme="noir" title="Noir">Noir</button>
+      </div>
+      <div class="actions">
+        <button id="btn-randomize" title="Randomize (Space)">Randomize</button>
+        <button id="btn-help" aria-haspopup="dialog" aria-controls="help">?</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="console-grid" role="main">
+    <!-- ENERGY CORE -->
+    <section class="widget energy-core" aria-labelledby="core-title">
+      <header><h2 id="core-title">Energy Core</h2></header>
+      <div class="core-wrap">
+        <button id="core" class="core" aria-pressed="false" title="Pulse the core"></button>
+        <div class="ring ring-1"></div>
+        <div class="ring ring-2"></div>
+        <div class="ring ring-3"></div>
+      </div>
+      <footer class="hint">Click to pulse • Drag rings to spin</footer>
+    </section>
+
+    <!-- XY DRONE PAD -->
+    <section class="widget drone" aria-labelledby="drone-title">
+      <header><h2 id="drone-title">Drone Pad</h2></header>
+      <div id="drone-pad" role="application" aria-label="Drone XY Pad">
+        <div class="cursor" aria-hidden="true"></div>
+      </div>
+      <div class="drone-controls">
+        <label><input id="drone-hold" type="checkbox"> Hold</label>
+        <label>Wave
+          <select id="drone-wave">
+            <option>sine</option><option>triangle</option><option>square</option><option>sawtooth</option>
+          </select>
+        </label>
+        <label>Volume <input id="drone-vol" type="range" min="0" max="100" value="40"></label>
+      </div>
+      <footer class="hint">Drag inside to play continuous tones (X=pitch, Y=filter)</footer>
+    </section>
+
+    <!-- HARMONICS PAD -->
+    <section class="widget tones" aria-labelledby="tones-title">
+      <header><h2 id="tones-title">Harmonics</h2></header>
+      <div class="tone-grid" role="group" aria-label="Harmonic pads">
+        <button class="tone" data-mul="1.00">F0</button>
+        <button class="tone" data-mul="1.25">F5</button>
+        <button class="tone" data-mul="1.50">F7</button>
+        <button class="tone" data-mul="2.00">F12</button>
+        <button class="tone" data-mul="2.50">F17</button>
+        <button class="tone" data-mul="3.00">F19</button>
+        <button class="tone" data-mul="0.75">F-5</button>
+        <button class="tone" data-mul="1.66">Phi</button>
+      </div>
+      <footer class="hint">Tap to stack shimmering partials</footer>
+    </section>
+
+    <!-- KNOB BANK -->
+    <section class="widget knobs" aria-labelledby="knobs-title">
+      <header><h2 id="knobs-title">Flux Controls</h2></header>
+      <div class="knob-grid">
+        <div class="knob-wrap">
+          <div class="knob" data-min="-135" data-max="135" data-value="0.55" data-var="--flux">
+            <div class="dial"><div class="indicator"></div></div>
+          </div>
+          <label>Flux</label>
+        </div>
+        <div class="knob-wrap">
+          <div class="knob" data-min="-135" data-max="135" data-value="0.35" data-var="--phase">
+            <div class="dial"><div class="indicator"></div></div>
+          </div>
+          <label>Phase</label>
+        </div>
+        <div class="knob-wrap">
+          <div class="knob" data-min="-135" data-max="135" data-value="0.75" data-var="--gain">
+            <div class="dial"><div class="indicator"></div></div>
+          </div>
+          <label>Gain</label>
+        </div>
+      </div>
+      <footer class="hint">Drag to rotate • Double-click to center</footer>
+    </section>
+
+    <!-- TOGGLE BANK -->
+    <section class="widget toggles" aria-labelledby="toggles-title">
+      <header><h2 id="toggles-title">Subsystems</h2></header>
+      <div class="toggle-grid">
+        <label class="toggle"><input type="checkbox" checked><span>ION</span></label>
+        <label class="toggle"><input type="checkbox"><span>SHD</span></label>
+        <label class="toggle"><input type="checkbox"><span>NAV</span></label>
+        <label class="toggle"><input type="checkbox" checked><span>CLS</span></label>
+        <label class="toggle"><input type="checkbox"><span>GTE</span></label>
+        <label class="toggle"><input type="checkbox"><span>ANC</span></label>
+      </div>
+      <footer class="hint">Tap switches • LEDs indicate flux</footer>
+    </section>
+
+    <!-- MICRO SLIDERS -->
+    <section class="widget sliders" aria-labelledby="sliders-title">
+      <header><h2 id="sliders-title">Micro Channels</h2></header>
+      <div class="slider-bank" role="group" aria-label="Micro sliders">
+        <div class="vslider"><input type="range" min="0" max="100" value="35" orient="vertical"></div>
+        <div class="vslider"><input type="range" min="0" max="100" value="50" orient="vertical"></div>
+        <div class="vslider"><input type="range" min="0" max="100" value="65" orient="vertical"></div>
+        <div class="vslider"><input type="range" min="0" max="100" value="20" orient="vertical"></div>
+        <div class="vslider"><input type="range" min="0" max="100" value="80" orient="vertical"></div>
+        <div class="vslider"><input type="range" min="0" max="100" value="10" orient="vertical"></div>
+        <div class="vslider"><input type="range" min="0" max="100" value="55" orient="vertical"></div>
+        <div class="vslider"><input type="range" min="0" max="100" value="40" orient="vertical"></div>
+        <div class="vslider"><input type="range" min="0" max="100" value="75" orient="vertical"></div>
+        <div class="vslider"><input type="range" min="0" max="100" value="30" orient="vertical"></div>
+        <div class="vslider"><input type="range" min="0" max="100" value="60" orient="vertical"></div>
+        <div class="vslider"><input type="range" min="0" max="100" value="15" orient="vertical"></div>
+      </div>
+      <footer class="hint">Shift+Drag for fine control</footer>
+    </section>
+
+    <!-- MATRIX SEQUENCER -->
+    <section class="widget matrix" aria-labelledby="matrix-title">
+      <header><h2 id="matrix-title">Pulse Matrix</h2></header>
+      <div class="matrix-grid" role="grid" aria-label="8x8 matrix"></div>
+      <div class="matrix-controls">
+        <button id="btn-play" aria-pressed="true">Pause</button>
+        <label>Tempo <input id="tempo" type="range" min="60" max="180" value="120"></label>
+        <label>Swing <input id="swing" type="range" min="0" max="100" value="0"></label>
+      </div>
+      <footer class="hint">Click squares • Row = pitch • Column = time</footer>
+    </section>
+
+    <!-- OSCILLOSCOPE + NEBULA -->
+    <section class="widget scope" aria-labelledby="scope-title">
+      <header><h2 id="scope-title">Scope & Nebula</h2></header>
+      <canvas id="scope" width="640" height="140" aria-label="oscilloscope"></canvas>
+      <canvas id="nebula" width="640" height="120" aria-label="nebula"></canvas>
+      <footer class="hint">Audio-reactive particle nebula</footer>
+    </section>
+
+    <!-- EFFECTS & MODS -->
+    <section class="widget effects" aria-labelledby="fx-title">
+      <header><h2 id="fx-title">Effects & Mods</h2></header>
+      <div class="fx-grid">
+        <label>Cutoff <input id="fx-cutoff" type="range" min="120" max="8000" value="1800"></label>
+        <label>Resonance <input id="fx-q" type="range" min="0.1" max="20" step="0.1" value="1.2"></label>
+        <label>Delay <input id="fx-delay" type="range" min="0" max="0.7" step="0.01" value="0.18"></label>
+        <label>Feedback <input id="fx-feedback" type="range" min="0" max="0.9" step="0.01" value="0.35"></label>
+        <label>Reverb <input id="fx-reverb" type="range" min="0" max="1" step="0.01" value="0.2"></label>
+        <label>Distort <input id="fx-dist" type="range" min="0" max="100" value="10"></label>
+        <label>Wet/Dry <input id="fx-mix" type="range" min="0" max="1" step="0.01" value="0.35"></label>
+      </div>
+      <div class="mod-grid">
+        <div class="mod-header">LFO</div>
+        <label>Rate <input id="lfo-rate" type="range" min="0.1" max="10" step="0.1" value="2.4"></label>
+        <label>Depth <input id="lfo-depth" type="range" min="0" max="1" step="0.01" value="0.4"></label>
+        <label class="mod-route"><input id="lfo-cutoff" type="checkbox" checked> → Cutoff</label>
+        <label class="mod-route"><input id="lfo-gain" type="checkbox"> → Gain</label>
+        <label class="mod-route"><input id="lfo-delay" type="checkbox"> → Delay</label>
+      </div>
+      <footer class="hint">Layer effects to sculpt alien textures</footer>
+    </section>
+
+    <!-- WORMHOLE -->
+    <section class="widget wormhole" aria-labelledby="worm-title">
+      <header><h2 id="worm-title">Wormhole</h2></header>
+      <input id="worm" type="range" min="0" max="100" value="20" />
+      <footer class="hint">Drag to distort spacetime</footer>
+    </section>
+
+    <!-- GLYPH KEYPAD (BIGGER) -->
+    <section class="widget keypad" aria-labelledby="keypad-title">
+      <header><h2 id="keypad-title">Glyph Pad</h2></header>
+      <div class="pad"></div>
+      <footer class="hint">Bigger glyphs • Each speaks a tone</footer>
+    </section>
+
+    <!-- TERMINAL -->
+    <section class="widget terminal" aria-labelledby="term-title">
+      <header><h2 id="term-title">Status Terminal</h2></header>
+      <div class="crt" role="log" aria-live="polite"></div>
+      <footer class="hint">Autonomous chatter</footer>
+    </section>
+
+  </main>
+
+  <dialog id="help">
+    <h3>Help</h3>
+    <ul>
+      <li><strong>Space</strong>: Randomize controls</li>
+      <li><strong>?</strong>: Toggle this help</li>
+      <li><strong>Drag</strong> the Drone Pad, knobs, and rings</li>
+      <li><strong>Tap</strong> glyphs and harmonic pads</li>
+    </ul>
+    <form method="dialog">
+      <button>Close</button>
+    </form>
+  </dialog>
+
+  <footer class="bottombar">
+    <span>Made for wandering hands and curious minds.</span>
+    <span class="kbd">Press <b>?</b> for help</span>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
